@@ -25,8 +25,7 @@ const Portfolio = () => {
 				};
 			});
 		} else {
-			alert(`You made ${priceInfo.stockPrice * stocksBought}${account}`);
-			// setPriceArr([]);
+			setShowModal(true);
 		}
 	};
 
@@ -46,9 +45,25 @@ const Portfolio = () => {
 		setStocksBought(0);
 	};
 
+	const resetGame = () => {
+		setAccount(10000);
+		setStocksBought(0);
+		setPriceInfo({
+			stockPrice: 100,
+			priceArr: [],
+		});
+	};
+
 	return (
 		<div className="main-container">
-			<PopUp setShowModal={setShowModal} showModal={showModal} />
+			<PopUp
+				setShowModal={setShowModal}
+				showModal={showModal}
+				priceInfo={priceInfo}
+				stocksBought={stocksBought}
+				account={account}
+				resetGame={resetGame}
+			/>
 			<div className="portfolio__container">
 				<div className="money">account: ${account.toFixed(2)}</div>
 				<div className="stocks">stocks owned {stocksBought.toFixed(2)}</div>
