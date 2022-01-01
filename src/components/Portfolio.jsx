@@ -4,6 +4,9 @@ import Change from "./Change";
 import Prices from "./Prices";
 import { Chart } from "./Charts";
 import PopUp from "./PopUp";
+import { Button } from "react-bootstrap";
+import BuySell from "./BuySell";
+
 const Portfolio = () => {
 	const [account, setAccount] = useState(10000);
 	const [stocksBought, setStocksBought] = useState(0);
@@ -67,20 +70,11 @@ const Portfolio = () => {
 			<div className="portfolio__container">
 				<div className="money">account: ${account.toFixed(2)}</div>
 				<div className="stocks">stocks owned {stocksBought.toFixed(2)}</div>
-				<div className="portfolio__container__buy">
-					<button onClick={buyAllStock} className="buy-button">
-						Buy
-					</button>
-				</div>
-				<div className="portfolio__container__sell">
-					<button onClick={sellAllStock} className="sell-button">
-						Sell
-					</button>
-				</div>
 			</div>
 			<Change />
 			<Prices stockPrice={priceInfo.stockPrice} changePrice={changePrice} />
 			<Chart prices={priceInfo.priceArr} />
+			<BuySell buyAllStock={buyAllStock} sellAllStock={sellAllStock} />
 		</div>
 	);
 };

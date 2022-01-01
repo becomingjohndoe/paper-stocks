@@ -18,3 +18,10 @@
 	color: rgb(0, 0, 0);
 	text-align: center;
 }
+
+.buy-button {
+	width: 100%;
+}
+.sell-button {
+	width: 100%;
+}
