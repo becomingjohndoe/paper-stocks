@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const Change = () => {
+const Change = ({ priceInfo }) => {
 	const [change, setChange] = useState(-14);
 	return (
 		<div className="change-container">
-			<div className="change">${change}%</div>
+			<div className="change">${priceInfo.percentChange}%</div>
 		</div>
 	);
 };

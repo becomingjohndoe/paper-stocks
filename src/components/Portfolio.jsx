@@ -14,6 +14,7 @@ const Portfolio = () => {
 	const [priceInfo, setPriceInfo] = useState({
 		stockPrice: 100,
 		priceArr: [],
+		percentChange: 0,
 	});
 
 	const changePrice = () => {
@@ -25,6 +26,7 @@ const Portfolio = () => {
 				return {
 					stockPrice: lastPrice,
 					priceArr: [...prevState.priceArr, lastPrice],
+					percentChange: percentChange(prevState.stockPrice, lastPrice),
 				};
 			});
 		} else {
@@ -57,6 +59,10 @@ const Portfolio = () => {
 		});
 	};
 
+	function percentChange(before, after) {
+		return ((after - before) / before) * 100;
+	}
+
 	return (
 		<div className="main-container">
 			<PopUp
@@ -71,7 +77,7 @@ const Portfolio = () => {
 				<div className="money">account: ${account.toFixed(2)}</div>
 				<div className="stocks">stocks owned {stocksBought.toFixed(2)}</div>
 			</div>
-			<Change />
+			<Change priceInfo={priceInfo} />
 			<Prices stockPrice={priceInfo.stockPrice} changePrice={changePrice} />
 			<Chart prices={priceInfo.priceArr} />
 			<BuySell buyAllStock={buyAllStock} sellAllStock={sellAllStock} />
