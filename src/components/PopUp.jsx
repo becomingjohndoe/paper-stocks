@@ -10,7 +10,6 @@ const PopUp = ({
 }) => {
 	return (
 		<>
-			<button onClick={() => setShowModal(true)}>Show Modal</button>
 			<Modal show={showModal} onHide={() => setShowModal(false)} centered>
 				<Modal.Header>
 					<Modal.Title>
