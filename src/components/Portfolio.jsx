@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import generatePriceData from "../utils/price-data";
 import Change from "./Change";
 import Prices from "./Prices";
@@ -8,14 +8,18 @@ import { Button } from "react-bootstrap";
 import BuySell from "./BuySell";
 
 const Portfolio = () => {
-	const [account, setAccount] = useState(10000);
+	const [account, setAccount] = useState(100);
 	const [stocksBought, setStocksBought] = useState(0);
 	const [showModal, setShowModal] = useState(false);
+	const [costBasis, setCostBasis] = useState(0);
 	const [priceInfo, setPriceInfo] = useState({
-		stockPrice: 100,
-		priceArr: [],
+		stockPrice: 10,
+		priceArr: [10],
 		percentChange: 0,
+		costBasisIsUp: true,
+		costBasisPercentChange: 0,
 	});
+	const chartRef = useRef(null);
 
 	const changePrice = () => {
 		if (priceInfo.priceArr.length < 30) {
@@ -27,8 +31,14 @@ const Portfolio = () => {
 					stockPrice: lastPrice,
 					priceArr: [...prevState.priceArr, lastPrice],
 					percentChange: percentChange(prevState.stockPrice, lastPrice),
+					isUp: prevState.stockPrice < lastPrice,
+					costBasisIsUp: costBasis < lastPrice,
+					costBasisPercentChange: percentChange(costBasis, lastPrice),
 				};
 			});
+			if (stocksBought > 0) {
+				setAccount(stocksBought * priceInfo.stockPrice);
+			}
 		} else {
 			setShowModal(true);
 		}
@@ -38,25 +48,27 @@ const Portfolio = () => {
 		setStocksBought((prevState) => {
 			return account / priceInfo.stockPrice;
 		});
-		setAccount((prevState) => {
-			return prevState - (priceInfo.stockPrice * account) / priceInfo.stockPrice;
-		});
+		chartRef.current.style.background = "yellow";
+		setCostBasis(priceInfo.stockPrice);
 	};
 
 	const sellAllStock = () => {
-		setAccount((prevState) => {
-			return prevState + priceInfo.stockPrice * stocksBought;
-		});
 		setStocksBought(0);
+		chartRef.current.style.background = "white";
+		setCostBasis(0);
 	};
 
 	const resetGame = () => {
-		setAccount(10000);
+		setAccount(100);
 		setStocksBought(0);
 		setPriceInfo({
-			stockPrice: 100,
-			priceArr: [],
+			stockPrice: 10,
+			priceArr: [10],
+			percentChange: 0,
+			costBasisIsUp: true,
+			costBasisPercentChange: 0,
 		});
+		setCostBasis(0);
 	};
 
 	function percentChange(before, after) {
@@ -73,14 +85,34 @@ const Portfolio = () => {
 				account={account}
 				resetGame={resetGame}
 			/>
-			<div className="portfolio__container">
-				<div className="money">account: ${account.toFixed(2)}</div>
-				<div className="stocks">stocks owned {stocksBought.toFixed(2)}</div>
+			<div className="account-container">
+				<div className="days">
+					<span>Account Balance</span>
+					Day {priceInfo.priceArr.length}/30
+				</div>
+				<div className="balance">
+					<div className="account-balance">${account.toFixed(2)}</div>
+					<div
+						className="percent-change"
+						style={{ color: priceInfo.isUp ? "green" : "red" }}
+					>
+						{`(${priceInfo.percentChange.toFixed(2)}%)`}
+					</div>
+				</div>
 			</div>
-			<Change priceInfo={priceInfo} />
-			<Prices stockPrice={priceInfo.stockPrice} changePrice={changePrice} />
-			<Chart prices={priceInfo.priceArr} />
-			<BuySell buyAllStock={buyAllStock} sellAllStock={sellAllStock} />
+
+			<div className="chart" ref={chartRef}>
+				<Prices priceInfo={priceInfo} changePrice={changePrice} />
+				<Chart priceInfo={priceInfo} />
+				<BuySell
+					buyAllStock={buyAllStock}
+					sellAllStock={sellAllStock}
+					account={account}
+					stocksBought={stocksBought}
+					costBasis={costBasis}
+					priceInfo={priceInfo}
+				/>
+			</div>
 		</div>
 	);
 };
