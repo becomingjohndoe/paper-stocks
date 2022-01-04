@@ -21,7 +21,71 @@
 
 .buy-button {
 	width: 100%;
+	flex-grow: 1;
 }
 .sell-button {
 	width: 100%;
+	flex-grow: 1;
+}
+
+.stock-price {
+	font-size: 2.25rem;
+	line-height: 2.5rem;
+	color: rgb(133, 132, 132);
+	font-weight: bold;
+}
+
+.stock-prices-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 7px;
+}
+
+.buy-sell-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 7px;
+}
+
+.portfolio__container__buy {
+	flex-grow: 1;
+}
+
+.portfolio__container__sell {
+	flex-grow: 1;
+}
+
+.portfolio__container {
+	text-align: left;
+}
+
+.account-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 7px;
+}
+.days {
+	flex-grow: 1;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.stock-name {
+	text-align: left;
+	color: gray;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.account-balance {
+	font-size: 1.25rem;
+	line-height: 2.5rem;
+	color: rgb(133, 132, 132);
+	font-weight: bold;
 }
