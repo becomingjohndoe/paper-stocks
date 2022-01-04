@@ -7,6 +7,7 @@ import {
 	Title,
 	Tooltip,
 	Legend,
+	Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
@@ -17,21 +18,45 @@ ChartJS.register(
 	LineElement,
 	Title,
 	Tooltip,
-	Legend
+	Legend,
+	Filler
 );
 
 export function Chart(props: any) {
-	let prices: number[] = props.prices;
+	let prices: number[] = props.priceInfo.priceArr;
+	let isUp = props.priceInfo.isUp;
 
+	const red = "#f65757";
+	const green = "#03c03c";
 	const options = {
 		responsive: true,
+		animation: {
+			duration: 500,
+		},
 		plugins: {
 			legend: {
-				position: "top" as const,
+				display: false,
+				usePointStyle: true,
 			},
 			title: {
-				display: true,
+				display: false,
 				text: "Chart.js Line Chart",
+			},
+		},
+
+		elements: {
+			line: {
+				tension: 0.4,
+			},
+		},
+		scales: {
+			xAxis: {
+				display: false,
+			},
+			yAxis: {
+				grid: {
+					drawBorder: false,
+				},
 			},
 		},
 	};
@@ -47,14 +72,10 @@ export function Chart(props: any) {
 			{
 				label: "Dataset 1",
 				data: prices,
-				borderColor: "rgb(255, 99, 132)",
-				backgroundColor: "rgba(255, 99, 132, 0.5)",
-			},
-			{
-				label: "Dataset 2",
-				data: prices,
-				borderColor: "rgb(53, 162, 235)",
-				backgroundColor: "rgba(53, 162, 235, 0.5)",
+				borderColor: isUp ? green : red,
+				backgroundColor: isUp ? green : red,
+				fill: "origin",
+				pointRadius: 0,
 			},
 		],
 	};
