@@ -1,5 +1,5 @@
 import { Modal, Button } from "react-bootstrap";
-import { useState } from "react";
+import React, { FC } from "react";
 const PopUp = ({
 	showModal,
 	setShowModal,

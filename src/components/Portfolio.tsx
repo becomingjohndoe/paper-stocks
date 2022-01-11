@@ -1,10 +1,8 @@
 import { useState, useRef } from "react";
 import generatePriceData from "../utils/price-data";
-import Change from "./Change";
 import Prices from "./Prices";
 import { Chart } from "./Charts";
 import PopUp from "./PopUp";
-import { Button } from "react-bootstrap";
 import BuySell from "./BuySell";
 
 const Portfolio = () => {
@@ -18,8 +16,9 @@ const Portfolio = () => {
 		percentChange: 0,
 		costBasisIsUp: true,
 		costBasisPercentChange: 0,
+		isUp: true,
 	});
-	const chartRef = useRef(null);
+	const chartRef = useRef<HTMLDivElement>(null);
 
 	const changePrice = () => {
 		if (priceInfo.priceArr.length < 30) {
@@ -48,13 +47,13 @@ const Portfolio = () => {
 		setStocksBought((prevState) => {
 			return account / priceInfo.stockPrice;
 		});
-		chartRef.current.style.background = "yellow";
+		if (chartRef.current) chartRef.current.style.background = "yellow";
 		setCostBasis(priceInfo.stockPrice);
 	};
 
 	const sellAllStock = () => {
 		setStocksBought(0);
-		chartRef.current.style.background = "white";
+		if (chartRef.current) chartRef.current.style.background = "white";
 		setCostBasis(0);
 	};
 
@@ -67,11 +66,13 @@ const Portfolio = () => {
 			percentChange: 0,
 			costBasisIsUp: true,
 			costBasisPercentChange: 0,
+
+			isUp: true,
 		});
 		setCostBasis(0);
 	};
 
-	function percentChange(before, after) {
+	function percentChange(before: number, after: number): number {
 		return ((after - before) / before) * 100;
 	}
 
@@ -107,7 +108,6 @@ const Portfolio = () => {
 				<BuySell
 					buyAllStock={buyAllStock}
 					sellAllStock={sellAllStock}
-					account={account}
 					stocksBought={stocksBought}
 					costBasis={costBasis}
 					priceInfo={priceInfo}
