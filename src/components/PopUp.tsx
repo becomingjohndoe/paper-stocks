@@ -1,6 +1,23 @@
 import { Modal, Button } from "react-bootstrap";
 import React, { FC } from "react";
-const PopUp = ({
+
+interface PopUpProps {
+	showModal: boolean;
+	setShowModal: (showModal: boolean) => void;
+	priceInfo: {
+		stockPrice: number;
+		priceArr: number[];
+		percentChange: number;
+		isUp: boolean;
+		costBasisIsUp: boolean;
+		costBasisPercentChange: number;
+	};
+	stocksBought: number;
+	account: number;
+	resetGame: () => void;
+}
+
+const PopUp: FC<PopUpProps> = ({
 	showModal,
 	setShowModal,
 	priceInfo,
