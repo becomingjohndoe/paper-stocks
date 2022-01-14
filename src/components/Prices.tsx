@@ -1,11 +1,21 @@
-import { Component } from "react";
+import { FC } from "react";
 import { useEffect, useState } from "react";
-
-export default function Prices({ priceInfo, changePrice }) {
+interface Pricesprops {
+	priceInfo: {
+		stockPrice: number;
+		priceArr: number[];
+		percentChange: number;
+		isUp: boolean;
+		costBasisIsUp: boolean;
+		costBasisPercentChange: number;
+	};
+	changePrice: () => void;
+}
+const Prices: FC<Pricesprops> = ({ priceInfo, changePrice }) => {
 	useEffect(() => {
-		let myInterval;
+		let myInterval: number;
 
-		myInterval = setInterval(() => {
+		myInterval = window.setInterval(() => {
 			changePrice();
 		}, 1500);
 
@@ -28,4 +38,6 @@ export default function Prices({ priceInfo, changePrice }) {
 			</div>
 		</>
 	);
-}
+};
+
+export default Prices;
