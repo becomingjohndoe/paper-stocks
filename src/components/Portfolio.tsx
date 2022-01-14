@@ -4,6 +4,8 @@ import Prices from "./Prices";
 import { Chart } from "./Charts";
 import PopUp from "./PopUp";
 import BuySell from "./BuySell";
+import Header from "./Header";
+import { Row, Col, Container } from "react-bootstrap";
 
 const Portfolio = () => {
 	const [account, setAccount] = useState(100);
@@ -77,43 +79,48 @@ const Portfolio = () => {
 	}
 
 	return (
-		<div className="main-container">
-			<PopUp
-				setShowModal={setShowModal}
-				showModal={showModal}
-				priceInfo={priceInfo}
-				stocksBought={stocksBought}
-				account={account}
-				resetGame={resetGame}
-			/>
-			<div className="account-container">
-				<div className="days">
-					<span>Account Balance</span>
-					Day {priceInfo.priceArr.length}/30
-				</div>
-				<div className="balance">
-					<div className="account-balance">${account.toFixed(2)}</div>
-					<div
-						className="percent-change"
-						style={{ color: priceInfo.isUp ? "green" : "red" }}
-					>
-						{`(${priceInfo.percentChange.toFixed(2)}%)`}
+		<Container>
+			<Row>
+				<Col>
+					<Header />
+					<PopUp
+						setShowModal={setShowModal}
+						showModal={showModal}
+						priceInfo={priceInfo}
+						stocksBought={stocksBought}
+						account={account}
+						resetGame={resetGame}
+					/>
+					<div className="account-container">
+						<div className="days">
+							<span>Account Balance</span>
+							Day {priceInfo.priceArr.length}/30
+						</div>
+						<div className="balance">
+							<div className="account-balance">${account.toFixed(2)}</div>
+							<div
+								className="percent-change"
+								style={{ color: priceInfo.isUp ? "green" : "red" }}
+							>
+								{`(${priceInfo.percentChange.toFixed(2)}%)`}
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
 
-			<div className="chart" ref={chartRef}>
-				<Prices priceInfo={priceInfo} changePrice={changePrice} />
-				<Chart priceInfo={priceInfo} />
-				<BuySell
-					buyAllStock={buyAllStock}
-					sellAllStock={sellAllStock}
-					stocksBought={stocksBought}
-					costBasis={costBasis}
-					priceInfo={priceInfo}
-				/>
-			</div>
-		</div>
+					<div className="chart" ref={chartRef}>
+						<Prices priceInfo={priceInfo} changePrice={changePrice} />
+						<Chart priceInfo={priceInfo} />
+						<BuySell
+							buyAllStock={buyAllStock}
+							sellAllStock={sellAllStock}
+							stocksBought={stocksBought}
+							costBasis={costBasis}
+							priceInfo={priceInfo}
+						/>
+					</div>
+				</Col>
+			</Row>
+		</Container>
 	);
 };
 

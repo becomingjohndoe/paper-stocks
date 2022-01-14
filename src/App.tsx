@@ -1,16 +1,17 @@
 import "./App.css";
-import Header from "./components/Header";
-import Portfolio from "./components/Portfolio";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
+import { Route, Routes } from "react-router-dom";
+import Start from "./components/Start";
+import Portfolio from "./components/Portfolio";
 function App() {
 	const [showModal, setShowModal] = useState(false);
 	return (
 		<div className="App">
-			<Container>
-				<Header />
-				<Portfolio />
-			</Container>
+			<Routes>
+				<Route path="/" element={<Start />} />
+				<Route path="/portfolio" element={<Portfolio />} />
+			</Routes>
 		</div>
 	);
 }
