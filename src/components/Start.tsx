@@ -16,6 +16,7 @@ const Start = () => {
 							<p>1. You are given $100 dollars to start with.</p>
 							<p>2. Make as much money as possible in 45 seconds.</p>
 						</div>
+						<h4>Example</h4>
 						<img className="start-screenshot" src={screenshot} alt="" />
 					</div>
 				</Col>
