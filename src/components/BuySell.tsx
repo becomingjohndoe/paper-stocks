@@ -1,8 +1,20 @@
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
-import Change from "./Change";
-
-const BuySell = ({
+import { useState, FC } from "react";
+interface BuySellProps {
+	buyAllStock: () => void;
+	sellAllStock: () => void;
+	stocksBought: number;
+	costBasis: number;
+	priceInfo: {
+		stockPrice: number;
+		priceArr: number[];
+		percentChange: number;
+		isUp: boolean;
+		costBasisIsUp: boolean;
+		costBasisPercentChange: number;
+	};
+}
+const BuySell: FC<BuySellProps> = ({
 	buyAllStock,
 	sellAllStock,
 	stocksBought,
